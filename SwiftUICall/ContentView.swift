@@ -94,6 +94,7 @@ final class CallModel: NSObject, ObservableObject, VGVoiceClientDelegate {
     
     func loginIfNeeded() {
         guard status != "Connected" else { return }
+        VGVoiceClient.isUsingCallKit = false
         client.createSession("ALICE_JWT") { error, sessionId in
             if let error {
                 self.updateStatus(error.localizedDescription)
