@@ -10,7 +10,7 @@ import AVFoundation
 import VonageClientSDKVoice
 
 struct ContentView: View {
-    @ObservedObject var callModel = CallModel()
+    @StateObject var callModel = CallModel()
     
     var body: some View {
         VStack {
@@ -25,7 +25,7 @@ struct ContentView: View {
                     .padding(20)
                 
                 if !self.callModel.isCalling {
-                    Button(action: { self.callModel.callNumber() }) {
+                    Button(action: { self.callModel.startCall() }) {
                         HStack(spacing: 10) {
                             Image(systemName: "phone")
                             Text("Call")
@@ -104,7 +104,7 @@ final class CallModel: NSObject, ObservableObject, VGVoiceClientDelegate {
         }
     }
     
-    func callNumber() {
+    func startCall() {
         self.isCalling = true
         client.serverCall(["to": number]) { error, callId in
             if error == nil {
